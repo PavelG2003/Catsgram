@@ -20,6 +20,10 @@ public class UserService {
         return users.values();
     }
 
+    public Optional<User> getUserById(Long id) {
+        return Optional.ofNullable(users.get(id));
+    }
+
     public User create(User user) {
         if ((user.getEmail() == null) || (user.getEmail().isBlank())) {
             throw new ConditionsNotMetException("Имейл должен быть указан");
@@ -59,11 +63,6 @@ public class UserService {
             return oldUser;
         }
         throw new NotFoundException("Пользователь с id = " + newUser.getId() + " не найден");
-    }
-
-    public Optional<User> getUserById(Long id) {
-        User user = users.get(id);
-        return Optional.ofNullable(user);
     }
 
     private long getNextId() {
