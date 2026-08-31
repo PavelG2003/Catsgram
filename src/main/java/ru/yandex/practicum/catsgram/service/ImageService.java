@@ -28,18 +28,24 @@ public class ImageService {
 
     private final Map<Long, Image> images = new HashMap<>();
 
-    // директория для хранения изображений
+
     @Value("${catsgram.image-directory}")
     private String imageDirectory;
 
-    // сохранение списка изображений, связанных с указанным постом
+    public List<Image> getPostImages(long postId) {
+        //Post post = postService.getPostById(postId)
+                //          .orElseThrow(() -> new ConditionsNotMetException("Указанный пост не найден"));
+        //return images.get(postId);
+        return null;
+    }
+
     public List<Image> saveImages(long postId, List<MultipartFile> files) {
         return files.stream().map(file -> saveImage(postId, file)).collect(Collectors.toList());
     }
 
     // сохранение отдельного изображения, связанного с указанным постом
     private Image saveImage(long postId, MultipartFile file) {
-        Post post = postService.findById(postId)
+        Post post = postService.getPostById(postId)
                 .orElseThrow(() -> new ConditionsNotMetException("Указанный пост не найден"));
 
         // сохраняем изображение на диск и возвращаем путь к файлу
