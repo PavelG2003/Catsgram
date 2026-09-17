@@ -9,6 +9,7 @@ import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.ImageFileException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.model.Image;
+import ru.yandex.practicum.catsgram.model.ImageData;
 import ru.yandex.practicum.catsgram.model.Post;
 
 import java.io.IOException;
@@ -28,17 +29,11 @@ public class ImageService {
 
     private final Map<Long, Image> images = new HashMap<>();
 
-
+    // директория для хранения изображений
     @Value("${catsgram.image-directory}")
     private String imageDirectory;
 
-    public List<Image> getPostImages(long postId) {
-        //Post post = postService.getPostById(postId)
-                //          .orElseThrow(() -> new ConditionsNotMetException("Указанный пост не найден"));
-        //return images.get(postId);
-        return null;
-    }
-
+    // сохранение списка изображений, связанных с указанным постом
     public List<Image> saveImages(long postId, List<MultipartFile> files) {
         return files.stream().map(file -> saveImage(postId, file)).collect(Collectors.toList());
     }
