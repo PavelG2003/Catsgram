@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
-import ru.yandex.practicum.catsgram.exception.ImageFileException;
-import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.model.Image;
 import ru.yandex.practicum.catsgram.model.ImageData;
 import ru.yandex.practicum.catsgram.model.Post;
@@ -30,7 +28,7 @@ public class ImageService {
     private final Map<Long, Image> images = new HashMap<>();
 
     // директория для хранения изображений
-    @Value("${catsgram.image-directory}")
+     //@Value("${catsgram.image-directory}")
     private String imageDirectory;
 
     // сохранение списка изображений, связанных с указанным постом
@@ -93,5 +91,9 @@ public class ImageService {
                 .max()
                 .orElse(0);
         return ++currentMaxId;
+    }
+
+    public ImageData getImageData(long imageId) {
+        return null;
     }
 }

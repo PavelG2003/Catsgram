@@ -1,72 +1,51 @@
 package ru.yandex.practicum.catsgram.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.catsgram.dal.PostRepository;
+import ru.yandex.practicum.catsgram.dto.post.NewPostRequest;
+import ru.yandex.practicum.catsgram.dto.post.UpdatePostRequest;
 import ru.yandex.practicum.catsgram.enums.SortOrder;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
+import ru.yandex.practicum.catsgram.mapper.PostMapper;
 import ru.yandex.practicum.catsgram.model.Post;
 
-import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
     private final UserService userService;
-    private final Map<Long, Post> posts = new HashMap<>();
+    private final PostRepository postRepository;
 
-    public PostService(UserService userService) {
-        this.userService = userService;
+    public List<Post> findAll(int from, int size, SortOrder sort) {
+        return postRepository.findAll(sort, from, size);
     }
 
-    public Collection<Post> findAll(int from, int size, SortOrder sort) {
-        return posts.values().stream()
-                .skip(from)
-                .limit(size)
-                .sorted(sort == SortOrder.ASCENDING
-                        ? Comparator.comparing(Post::getPostDate)
-                        : Comparator.comparing(Post::getPostDate).reversed())
-                .collect(Collectors.toList());
+    public Post getPostById(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пост с id: " + id + " не найден"));
     }
 
-    public Optional<Post> getPostById(Long id) {
-        return Optional.ofNullable(posts.get(id));
-    }
-
-    public Post create(Post post) {
-        if (post.getDescription() == null || post.getDescription().isBlank()) {
+    public Post create(NewPostRequest request) {
+        if (request.getDescription() == null || request.getDescription().isBlank()) {
             throw new ConditionsNotMetException("Описание не может быть пустым");
         }
-        if (!userService.getUserById(post.getAuthorId()).isPresent()) {
-            throw new ConditionsNotMetException("«Автор с id = " + post.getAuthorId() + " не найден»");
+        if (userService.getUserById(request.getAuthorId()) == null) {
+            throw new ConditionsNotMetException("«Автор с id = " + request.getAuthorId() + " не найден»");
         }
-        post.setId(getNextId());
-        post.setPostDate(Instant.now());
-        posts.put(post.getId(), post);
+
+        Post post = PostMapper.mapToPost(request);
+        post = postRepository.save(post);
         return post;
     }
 
-    public Post update(Post newPost) {
-        if (newPost.getId() == null) {
-            throw new ConditionsNotMetException("Id должен быть указан");
-        }
-        if (posts.containsKey(newPost.getId())) {
-            Post oldPost = posts.get(newPost.getId());
-            if (newPost.getDescription() == null || newPost.getDescription().isBlank()) {
-                throw new ConditionsNotMetException("Описание не может быть пустым");
-            }
-            oldPost.setDescription(newPost.getDescription());
-            return oldPost;
-        }
-        throw new NotFoundException("Пост с id = " + newPost.getId() + " не найден");
-    }
-
-    private long getNextId() {
-        long currentMaxId = posts.keySet()
-                .stream()
-                .mapToLong(id -> id)
-                .max()
-                .orElse(0);
-        return ++currentMaxId;
+    public Post update(long postId, UpdatePostRequest request) {
+        Post updatedPost = postRepository.findById(postId)
+                .map(post -> PostMapper.updatePostFields(post, request))
+                .orElseThrow(() -> new NotFoundException("Пост с id: " + postId + " не найден"));
+        updatedPost = postRepository.update(updatedPost);
+        return updatedPost;
     }
 }

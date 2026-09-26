@@ -1,0 +1,4 @@
+ru\yandex\practicum\catsgram\exception\NotFoundException.class
+ru\yandex\practicum\catsgram\exception\ImageFileException.class
+ru\yandex\practicum\catsgram\model\Image.class
+ru\yandex\practicum\catsgram\model\User.class

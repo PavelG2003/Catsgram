@@ -1,0 +1,16 @@
+#Fri Aug 21 21:36:21 MSK 2026
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\CatsgramApplication.java=1787241009569
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\controller\\HomeController.java=1787241009569
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\controller\\PostController.java=1787336946499
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\controller\\UserController.java=1787322489454
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\exception\\ConditionsNotMetException.java=1787241009575
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\exception\\DuplicatedDataException.java=1787242961348
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\exception\\NotFoundException.java=1787241009575
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\model\\Image.java=1787241009575
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\model\\Post.java=1787241009575
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\model\\User.java=1787241009575
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\service\\PostService.java=1787337324013
+C\:\\projects\\Catsgram\\src\\main\\java\\ru\\yandex\\practicum\\catsgram\\service\\UserService.java=1787322489446
+C\:\\projects\\Catsgram\\src\\main\\resources\\application.properties=1787241009575
+configuration*?=1845E9B0F02EAC52DEC9563D64FE2F8374785F3D
+module-resource*?\:suppressions.xml=8E4A4D7AED8E5B4D3F3CA955E812999D9078F8C1
